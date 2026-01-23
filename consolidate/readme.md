@@ -1,4 +1,4 @@
-# Software Development Projects
+# Software Development Consolidated Course Projects
 
 ## Overview
 This folder contains all software development–related work completed as part of the course. It serves as a central repository for projects, practical tasks, and consolidated assignments that demonstrate the application of software development principles and programming concepts.
