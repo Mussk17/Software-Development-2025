@@ -77,3 +77,4 @@ def get_data_filepath():
     # Store in the same directory as the application
     script_dir = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(script_dir, 'tasks.json')
+
