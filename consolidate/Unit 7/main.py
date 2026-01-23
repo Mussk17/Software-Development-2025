@@ -1,6 +1,3 @@
-/// Guess the Number ////
-
-
 import functions
 
 
