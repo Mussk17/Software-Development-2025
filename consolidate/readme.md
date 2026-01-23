@@ -1,4 +1,4 @@
-# Software Development Consolidated Course Projects
+# Software Development Projects
 
 ## Overview
 This folder contains all software development–related work completed as part of the course. It serves as a central repository for projects, practical tasks, and consolidated assignments that demonstrate the application of software development principles and programming concepts.
@@ -28,4 +28,9 @@ The purpose of this folder is to showcase the progression of skills and knowledg
 - Run Python programs using Python 3.x.
 
 ## Notes
-These projects were developed for academic purposes and reflect the concepts and methodologies
+These projects were developed for academic purposes and reflect the concepts and methodologies taught during the course.
+
+## Author
+- **Name:** Muskan Khorasi 
+- **Course:** Software Development  
+- **Institution:** The University of Law
