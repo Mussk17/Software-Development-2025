@@ -1,4 +1,4 @@
-# Unit 9: GUI Application Development - Task Manager
+# Unit 9: Task Manager GUI Application Development - Graphical User Interfaces (GUIs) in programming
 
 A simple, user-friendly Task Manager application built with Python's Tkinter library. This project demonstrates GUI development principles and usability best practices in a beginner-friendly way.
 
