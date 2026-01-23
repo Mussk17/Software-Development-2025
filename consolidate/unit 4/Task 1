@@ -1,1 +1,195 @@
+"""
+Inventory Management System
+"""
+
+import csv
+
+# Strings for product names
+product1 = "Laptop"
+product2 = "Mouse"
+product3 = "Keyboard"
+
+# Integers for quantities
+qty1 = 15
+qty2 = 50
+qty3 = 30
+
+# Floats for prices
+price1 = 899.99
+price2 = 24.95
+price3 = 79.50
+
+# Using a dictionary to store everything together
+inventory = {}
+inventory[product1] = {"qty": qty1, "price": price1}
+inventory[product2] = {"qty": qty2, "price": price2}
+inventory[product3] = {"qty": qty3, "price": price3}
+
+# File to save the data
+filename = "inventory.csv"
+
+def display_inventory():
+    """Show all items in inventory"""
+    print("\nCURRENT INVENTORY:\n")
+    if len(inventory) == 0:
+        print("Inventory is empty!")
+        return
+    
+    total_value = 0.0
+    
+    for product, info in inventory.items():
+        qty = info["qty"]
+        pr = info["price"]
+        value = qty * pr
+        total_value = total_value + value
+        
+        print(f"{product}: {qty} units @ ${pr:.2f} each = ${value:.2f}")
+    
+    print(f"\nTotal Inventory Value: ${total_value:.2f}\n")
+
+def add_product(name, quantity, price):
+    """Add or update a product"""
+    if name in inventory:
+        # Product exists, just update quantity
+        inventory[name]["qty"] = inventory[name]["qty"] + quantity
+        print(f"Updated {name}: added {quantity} units")
+    else:
+        # New product
+        inventory[name] = {"qty": quantity, "price": price}
+        print(f"Added {name}: {quantity} units @ ${price:.2f}")
+
+def update_qty(name, new_qty):
+    """Change the quantity of a product"""
+    if name in inventory:
+        inventory[name]["qty"] = new_qty
+        print(f"Updated {name} quantity to {new_qty}")
+    else:
+        print(f"Product {name} not found!")
+
+def update_price(name, new_price):
+    """Change the price of a product"""
+    if name in inventory:
+        inventory[name]["price"] = new_price
+        print(f"Updated {name} price to ${new_price:.2f}")
+    else:
+        print(f"Product {name} not found!")
+
+def remove_product(name):
+    """Remove a product from inventory"""
+    if name in inventory:
+        del inventory[name]
+        print(f"Removed {name} from inventory")
+    else:
+        print(f"Product {name} not found!")
+
+def save_to_file():
+    """Save inventory to CSV file"""
+    try:
+        file = open(filename, 'w', newline='')
+        writer = csv.writer(file)
+        
+        # Write header
+        writer.writerow(['Product', 'Quantity', 'Price'])
+        
+        # Write each product
+        for product, info in inventory.items():
+            writer.writerow([product, info["qty"], info["price"]])
+        
+        file.close()
+        print(f"Inventory saved to {filename}")
+    except Exception as e:
+        print(f"Error saving: {e}")
+
+def load_from_file():
+    """Load inventory from CSV file"""
+    global inventory
+    
+    try:
+        file = open(filename, 'r')
+        reader = csv.reader(file)
+        
+        # Skip header row
+        next(reader, None)
+        
+        inventory = {}
+        for row in reader:
+            if len(row) == 3:
+                name = row[0]
+                qty = int(row[1])
+                pr = float(row[2])
+                inventory[name] = {"qty": qty, "price": pr}
+        
+        file.close()
+        print(f"Inventory loaded from {filename}")
+        return True
+    except FileNotFoundError:
+        print(f"File {filename} not found. Using default inventory.")
+        return False
+    except Exception as e:
+        print(f"Error loading: {e}")
+        return False
+
+def save_to_text():
+    """Also save to a simple text file"""
+    try:
+        txt_file = "inventory.txt"
+        file = open(txt_file, 'w')
+        
+        file.write("INVENTORY LIST\n")
+        file.write("=" * 40 + "\n\n")
+        
+        for product, info in inventory.items():
+            file.write(f"Product: {product}\n")
+            file.write(f"  Quantity: {info['qty']}\n")
+            file.write(f"  Price: ${info['price']:.2f}\n")
+            file.write("-" * 40 + "\n")
+        
+        file.close()
+        print(f"Also saved to {txt_file}")
+    except Exception as e:
+        print(f"Error saving text file: {e}")
+
+# Main program
+def main():
+    print("=" * 50)
+    print("INVENTORY MANAGEMENT SYSTEM")
+    print("=" * 50)
+    
+    # Try to load existing inventory
+    file_exists = load_from_file()
+    
+    # Show what we have
+    display_inventory()
+    
+    # Practice adding a product
+    print("Adding a new product...")
+    add_product("Monitor", 12, 199.99)
+    
+    # Update some values
+    print("\nUpdating quantities and prices...")
+    update_qty("Laptop", 20)
+    update_price("Mouse", 19.99)
+    
+    # Show updated inventory
+    display_inventory()
+    
+    # Save everything
+    print("Saving inventory...")
+    save_to_file()
+    save_to_text()
+    
+    # Show data types we're using
+    print("\n" + "=" * 50)
+    print("DATA TYPES USED:")
+    print("=" * 50)
+    print(f"Product name (string): '{product1}' - type: {type(product1).__name__}")
+    print(f"Quantity (integer): {qty1} - type: {type(qty1).__name__}")
+    print(f"Price (float): {price1} - type: {type(price1).__name__}")
+    print(f"Inventory (dictionary): {type(inventory).__name__}")
+    
+    print("\nDone!")
+
+if __name__ == "__main__":
+    main()
+
 
