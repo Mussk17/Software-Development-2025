@@ -1,23 +1,28 @@
 # Unit 4: Inventory Management System
 
-A Python program for variable exploration that demonstrates different data types and file handling for data persistence.
+A Python program for variable exploration that demonstrates different data types, file handling for data persistence, and interactive programming with while loops and match-case statements.
 
 ## What It Does
 
 - Stores product names (strings), quantities (integers), and prices (floats) in a dictionary
-- Updates and displays inventory information
+- Interactive menu system for managing inventory
 - Saves data to CSV and text files for persistence
 - Loads data from files when the program starts
 
 ## Requirements
 
-- Python 3.11.9
+- Python 3.10+ (required for match-case statements)
 
 ## How to Run
 
 ```bash
 python inventory_manager.py
 ```
+
+The program will display an interactive menu where you can:
+1. Add or update products
+2. View current inventory
+3. Exit and save inventory
 
 ## Data Types Used
 
@@ -30,13 +35,20 @@ python inventory_manager.py
 
 - `display_inventory()` - Shows all products with quantities, prices, and total inventory value
 - `add_product(name, quantity, price)` - Adds a new product or updates quantity if product exists
-- `update_qty(name, new_qty)` - Changes the quantity of an existing product
-- `update_price(name, new_price)` - Changes the price of an existing product
-- `remove_product(name)` - Removes a product from inventory
+- `add_or_update_product()` - Interactive function to get user input and add/update products
 - `save_to_file()` - Saves inventory to CSV file (`inventory.csv`)
 - `load_from_file()` - Loads inventory from CSV file (returns True/False)
 - `save_to_text()` - Saves inventory to human-readable text file (`inventory.txt`)
-- `main()` - Main program function that runs the inventory management workflow
+- `main()` - Main program with interactive menu using while loop and match-case
+
+## Features Demonstrated
+
+- Variable declaration and assignment
+- Different data types (str, int, float, dict)
+- While loops for menu repetition
+- Match-case statements for choice handling (Python 3.10+)
+- File handling for data persistence
+- Error handling with try-except blocks
 
 ## Files Created
 
