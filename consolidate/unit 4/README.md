@@ -1,4 +1,6 @@
-# Unit 4: Inventory Management System
+# Unit 4: Variable Exploration and Data Persistence
+
+# Inventory Management System
 
 A Python program for variable exploration that demonstrates different data types, file handling for data persistence, and interactive programming with while loops and match-case statements.
 
