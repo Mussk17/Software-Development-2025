@@ -1,1 +1,177 @@
-hihikkl
+"""
+Unit 4: Variable Exploration and Data Persistence
+Inventory Management System
+
+Demonstrates:
+- Variable declaration and assignment
+- Different data types (str, int, float, dict)
+- Persistent storage using file handling
+- While loops and match-case statements
+"""
+
+import csv
+
+# Variable declaration and assignment
+# Strings (str) - text data
+product1 = "Laptop"
+product2 = "Mouse"
+product3 = "Keyboard"
+
+# Integers (int) - whole numbers
+qty1 = 15
+qty2 = 50
+qty3 = 30
+
+# Floats (float) - decimal numbers
+price1 = 899.99
+price2 = 24.95
+price3 = 79.50
+
+# Dictionary (dict) - storage mechanism for key-value pairs
+inventory = {}
+inventory[product1] = {"qty": qty1, "price": price1}
+inventory[product2] = {"qty": qty2, "price": price2}
+inventory[product3] = {"qty": qty3, "price": price3}
+
+filename = "inventory.csv"
+
+
+def display_inventory():
+    """Display all products with quantities, prices, and total value."""
+    print("\n--- CURRENT INVENTORY ---")
+    
+    if len(inventory) == 0:
+        print("Inventory is empty!")
+        return
+    
+    total_value = 0.0
+    
+    for product, info in inventory.items():
+        qty = info["qty"]
+        pr = info["price"]
+        value = qty * pr
+        total_value += value
+        print(f"{product}: {qty} units @ ${pr:.2f} each = ${value:.2f}")
+    
+    print(f"\nTotal Inventory Value: ${total_value:.2f}\n")
+
+
+def add_product(name, quantity, price):
+    """Add new product or update existing product quantity."""
+    if name in inventory:
+        inventory[name]["qty"] += quantity
+        print(f"Updated {name}: added {quantity} units")
+    else:
+        inventory[name] = {"qty": quantity, "price": price}
+        print(f"Added {name}: {quantity} units @ ${price:.2f}")
+
+
+def save_to_file():
+    """Save inventory to CSV file for persistent storage."""
+    try:
+        file = open(filename, 'w', newline='')
+        writer = csv.writer(file)
+        
+        writer.writerow(['Product', 'Quantity', 'Price'])
+        
+        for product, info in inventory.items():
+            writer.writerow([product, info["qty"], info["price"]])
+        
+        file.close()
+        print(f"Inventory saved to {filename}")
+    except Exception as e:
+        print(f"Error saving: {e}")
+
+
+def load_from_file():
+    """Load inventory from CSV file. Returns True if successful."""
+    global inventory
+    
+    try:
+        file = open(filename, 'r')
+        reader = csv.reader(file)
+        
+        next(reader, None)  # skip header
+        
+        inventory = {}
+        for row in reader:
+            if len(row) == 3:
+                name = row[0]
+                qty = int(row[1])
+                pr = float(row[2])
+                inventory[name] = {"qty": qty, "price": pr}
+        
+        file.close()
+        print(f"Inventory loaded from {filename}")
+        return True
+    except FileNotFoundError:
+        print(f"File {filename} not found. Using default inventory.")
+        return False
+    except Exception as e:
+        print(f"Error loading: {e}")
+        return False
+
+
+def save_to_text():
+    """Save inventory to human-readable text file."""
+    try:
+        txt_file = "inventory.txt"
+        file = open(txt_file, 'w')
+        
+        file.write("INVENTORY LIST\n")
+        file.write("=" * 40 + "\n\n")
+        
+        for product, info in inventory.items():
+            file.write(f"Product: {product}\n")
+            file.write(f"  Quantity: {info['qty']}\n")
+            file.write(f"  Price: ${info['price']:.2f}\n")
+            file.write("-" * 40 + "\n")
+        
+        file.close()
+        print(f"Also saved to {txt_file}")
+    except Exception as e:
+        print(f"Error saving text file: {e}")
+
+
+def add_or_update_product():
+    """Get user input and add/update a product."""
+    name = input("Enter product name: ")
+    
+    try:
+        quantity = int(input("Enter quantity: "))
+        price = float(input("Enter price: "))
+        add_product(name, quantity, price)
+    except ValueError:
+        print("Error: Quantity must be a number, price must be a decimal number.")
+
+
+def main():
+    """Main function with interactive menu using while loop and match-case."""
+    load_from_file()
+    
+    # While loop: keeps menu running until user exits
+    while True:
+        print("\n=== Inventory Management System ===")
+        print("1. Add / Update Product")
+        print("2. View Inventory")
+        print("3. Exit")
+        
+        choice = input("Enter your choice (1-3): ")
+        
+        # Match-case statement: handles user choice (Python 3.10+)
+        match choice:
+            case "1":
+                add_or_update_product()
+            case "2":
+                display_inventory()
+            case "3":
+                save_to_file()
+                save_to_text()
+                print("Exiting program. Inventory saved.")
+                break
+            case _:
+                print("Invalid choice. Try again.")
+
+
+if __name__ == "__main__":
+    main()
