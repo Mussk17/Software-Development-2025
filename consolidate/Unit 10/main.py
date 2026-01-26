@@ -26,9 +26,11 @@ def load_data():
     if os.path.exists(FILE):
         try:
             with open(FILE, "r") as f:
-                projects = json.load(f)
-        except json.JSONDecodeError:
+                data = json.load(f)
+                projects = data if isinstance(data, list) else []
+        except (json.JSONDecodeError, IOError) as e:
             projects = []
+            print(f"Error loading data: {e}")
 
 
 def save_data():
@@ -46,7 +48,7 @@ def count_tasks(tasks):
 def count_done(tasks):
     if not tasks:
         return 0
-    return sum((1 if t["completed"] else 0) + count_done(t.get("subtasks", [])) for t in tasks)
+    return sum((1 if t.get("completed", False) else 0) + count_done(t.get("subtasks", [])) for t in tasks)
 
 
 # ---------- PROJECT LOGIC ----------
@@ -71,10 +73,13 @@ def select_project(_=None):
 # ---------- TASK LOGIC ----------
 def add_task():
     if current == -1:
+        messagebox.showwarning("No Project", "Please select a project first.")
         return
     name = task_entry.get().strip()
     if not name:
         return
+    if "tasks" not in projects[current]:
+        projects[current]["tasks"] = []
     projects[current]["tasks"].append({
         "name": name,
         "priority": priority.get(),
@@ -91,8 +96,8 @@ def toggle_task():
         return
     sel = task_list.curselection()
     if sel:
-        t = projects[current]["tasks"][sel[0]]
-        t["completed"] = not t["completed"]
+        t = projects[current].get("tasks", [])[sel[0]]
+        t["completed"] = not t.get("completed", False)
         refresh_tasks()
         save_data()
 
@@ -101,18 +106,18 @@ def toggle_task():
 def refresh_projects():
     proj_list.delete(0, tk.END)
     for p in projects:
-        total = count_tasks(p["tasks"])
-        done = count_done(p["tasks"])
-        proj_list.insert(tk.END, f"{p['name']} ({done}/{total})")
+        total = count_tasks(p.get("tasks", []))
+        done = count_done(p.get("tasks", []))
+        proj_list.insert(tk.END, f"{p.get('name', 'Unknown')} ({done}/{total})")
 
 
 def refresh_tasks():
     task_list.delete(0, tk.END)
     if current == -1:
         return
-    for t in projects[current]["tasks"]:
-        mark = "[DONE] " if t["completed"] else ""
-        task_list.insert(tk.END, f"{mark}{t['name']} [{t['priority']}]")
+    for t in projects[current].get("tasks", []):
+        mark = "[DONE] " if t.get("completed", False) else ""
+        task_list.insert(tk.END, f"{mark}{t.get('name', 'Unknown')} [{t.get('priority', 'Medium')}]")
     refresh_projects()
 
 
