@@ -1,4 +1,4 @@
-# Rectangle Area Calculator
+# Rectangle Area Calculator - Unit 3 conolidate- Introduction to Python Programming
 
 ## Description
 This program calculates the area of a rectangle based on user input. The user enters the width and length, and the program displays the calculated area.
