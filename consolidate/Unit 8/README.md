@@ -237,6 +237,3 @@ Recursion is used in:
 - Mathematical sequence calculations
 - File system navigation
 
----
-
-*This unit demonstrates the fundamentals of recursive programming and optimization techniques through the Fibonacci sequence.*
