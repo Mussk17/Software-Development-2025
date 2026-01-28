@@ -1,5 +1,5 @@
 # Introduction to Software Versioning Unit 2-Consolidate 
-* Git-based project
+## Git-based project
 
 A Git-based project demonstrating the fundamentals of software versioning using Git and GitHub, including repository setup, branching, commits, and pull requests.
 
