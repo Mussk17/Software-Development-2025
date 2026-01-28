@@ -125,6 +125,17 @@ def refresh_tasks():
 root = tk.Tk()
 root.title("Project Manager")
 
+# Main heading with icon
+heading_frame = tk.Frame(root)
+heading_frame.pack(pady=20)
+heading_label = tk.Label(
+    heading_frame, 
+    text="📋 Project Management System",
+    font=("Arial", 18, "bold"),
+    fg="#2c3e50"
+)
+heading_label.pack()
+
 left = tk.Frame(root)
 left.pack(side=tk.LEFT, padx=10)
 
