@@ -299,6 +299,3 @@ This Task Manager application demonstrates practical GUI development skills in a
 
 The principles learned here apply to all GUI development, whether building desktop applications, web interfaces, or mobile apps.
 
----
-
-*This unit demonstrates practical GUI development skills and UX design principles through a simple, educational application.*
